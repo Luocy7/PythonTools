@@ -79,7 +79,7 @@ class Icourse163Mooc(Icourse163Base):
             chapter_title = winre.sub('', '{' + str(i) + '}--' + chapter[1])[:WIN_LENGTH]
             self.infos[chapter_title] = {}
             lessons = re.findall(r'chapterId=' + chapter[
-                0] + r'.+?contentType=1.+?id=(\d+).+?isTestChecked=false.+?name="((.|\n)+?)".+?test', text)
+                0] + r'.+?contentType=1.+?id=(\d+).+?isTestChecked=false.+?name="((.|\n)+?)".+?Spam', text)
             for j, lesson in enumerate(lessons, 1):
                 lesson_title = winre.sub('', '{' + str(j) + '}--' + lesson[1])[:WIN_LENGTH]
                 self.infos[chapter_title][lesson_title] = {}

@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
 
 import re
+import os
 import logging
 import time
 import random
-from pathlib import Path
-
 import requests
 
-from configparser import ConfigParser
+from pathlib import Path
+from dotenv import load_dotenv
 
 from qiniu import Auth, put_file
 from qiniu import BucketManager
+
+dotenv_path = Path(__file__).parent.absolute() / '.env'
+if dotenv_path.exists():
+    load_dotenv(dotenv_path)
 
 
 class MdImgHandle(object):
@@ -62,13 +66,11 @@ class MdImgHandle(object):
 
     # qn load config
     def loadconf(self):
-        cfg = ConfigParser()
         try:
-            cfg.read(r'UploadImg.ini')
-            self.qn_access_key = cfg.get('qn', 'Access_Key')
-            self.qn_secret_key = cfg.get('qn', 'Secret_Key')
-            self.qn_bucket_name = cfg.get('qn', 'Bucket_Name')
-            self.qn_bucket_url = cfg.get('qn', 'Bucket_Url')
+            self.qn_access_key = os.getenv('QN_ACCESS_KEY')
+            self.qn_secret_key = os.getenv('QN_SECRET_KEY')
+            self.qn_bucket_name = os.getenv('QN_BUCKET_NAME')
+            self.qn_bucket_url = os.getenv('QN_BUCKET_URL')
 
             self.q = Auth(self.qn_access_key, self.qn_secret_key)
 
@@ -173,6 +175,8 @@ class MdImgHandle(object):
 
 if __name__ == '__main__':
     path = "D:\\Fisher"
+    foo = MdImgHandle(path)
+    foo.loadconf()
 
     for folder in Path(path).glob('*'):
         print(folder)

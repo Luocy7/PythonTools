@@ -1,8 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 图片尺寸转换器，支持单张图片转换和批量转换
-@author: CSD
 @date: '2019-06-21'
 """
 import subprocess
