@@ -69,9 +69,10 @@ class QnUpload(object):
         dl_file = download_pic(url, pic_file)
         return dl_file
 
-    def upload_pic(self, img_file: Path) -> str:
+    def upload_pic(self, img_file: Path, key=None) -> str:
         try:
-            key = img_file.name
+            if not key:
+                key = img_file.name
             ret, info = put_file(self.token, key, img_file)
             assert ret['key'] == key
             assert ret['hash'] == etag(img_file)
